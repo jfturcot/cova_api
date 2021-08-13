@@ -9,8 +9,11 @@ module CovaApi
   AUTH_ENDPOINT = '/v1/oauth2/token'
 
   class << self
-    def authenticate(username:, password:, client_id:, client_secret:, token_hash: nil)
-      @credentials = { username: username, password: password, client_id: client_id, client_secret: client_secret }
+    def authenticate(username:, password:, client_id:, client_secret:, company_id:, token_hash: nil)
+      @credentials = {
+        username: username, password: password, client_id: client_id, client_secret: client_secret,
+        company_id: company_id
+      }
       client = OAuth2::Client.new client_id, client_secret, site: AUTH_URL, token_url: AUTH_ENDPOINT
       @token = if token_hash
                  OAuth2::AccessToken.from_hash(client, token_hash)
@@ -28,6 +31,12 @@ module CovaApi
       @token.to_hash
     rescue OAuth2::Error
       authenticate @credentials
+    end
+
+    def company_id
+      raise MissingAuthentication unless @credentials
+
+      @credentials[:company_id]
     end
 
     def connection(site)

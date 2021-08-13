@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'oauth2'
-
 RSpec.describe CovaApi::Endpoint::SalesOrder do
   it 'has a base prefix' do
     expect(CovaApi::Endpoint::SalesOrder.prefix).to eq('/covaorderintake/v1')

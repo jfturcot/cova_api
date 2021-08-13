@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'oauth2'
-
 RSpec.describe CovaApi do
   let!(:oauth_client) { OAuth2::Client.new '', '' }
   let(:oauth_token) { OAuth2::AccessToken.from_hash(oauth_client, {}) }
@@ -11,7 +9,8 @@ RSpec.describe CovaApi do
       username: 'username',
       password: 'password',
       client_id: 'client_id',
-      client_secret: 'client_secret'
+      client_secret: 'client_secret',
+      company_id: '123'
     }
   end
 
@@ -36,7 +35,8 @@ RSpec.describe CovaApi do
         username: 'username',
         password: 'password',
         client_id: 'client_id',
-        client_secret: 'client_secret'
+        client_secret: 'client_secret',
+        company_id: '123'
       )
     end
 
@@ -54,7 +54,7 @@ RSpec.describe CovaApi do
     end
   end
 
-  describe '.refresh' do
+  describe '.token' do
     describe 'when not authenticated' do
       it 'raises error' do
         expect { CovaApi.token }.to raise_error(CovaApi::MissingAuthentication)
@@ -69,7 +69,8 @@ RSpec.describe CovaApi do
           username: 'username',
           password: 'password',
           client_id: 'client_id',
-          client_secret: 'client_secret'
+          client_secret: 'client_secret',
+          company_id: '123'
         )
       end
 
@@ -101,7 +102,13 @@ RSpec.describe CovaApi do
     end
   end
 
-  describe '.connection' do
+  describe '.company_id' do
+    describe 'when not authenticated' do
+      it 'raises error' do
+        expect { CovaApi.company_id }.to raise_error(CovaApi::MissingAuthentication)
+      end
+    end
+
     describe 'when authenticated' do
       before do
         @token_hash = CovaApi.authenticate(
@@ -109,6 +116,32 @@ RSpec.describe CovaApi do
           password: 'password',
           client_id: 'client_id',
           client_secret: 'client_secret',
+          company_id: '123',
+          token_hash: {}
+        )
+      end
+
+      it 'returns the company_id' do
+        expect(CovaApi.company_id).to eq('123')
+      end
+    end
+  end
+
+  describe '.connection' do
+    describe 'when not authenticated' do
+      it 'raises error' do
+        expect { CovaApi.connection('https://www.example.com') }.to raise_error(CovaApi::MissingAuthentication)
+      end
+    end
+
+    describe 'when authenticated' do
+      before do
+        @token_hash = CovaApi.authenticate(
+          username: 'username',
+          password: 'password',
+          client_id: 'client_id',
+          client_secret: 'client_secret',
+          company_id: '123',
           token_hash: {}
         )
       end

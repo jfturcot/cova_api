@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 require 'cova_api/version'
+require 'cova_api/customer'
+require 'cova_api/product'
 require 'cova_api/authentication'
 require 'cova_api/endpoint/base'
 require 'cova_api/endpoint/catalog'
@@ -24,10 +26,6 @@ require 'cova_api/endpoint/user_management'
 
 module CovaApi
   class << self
-    def api
-      Endpoint::Api
-    end
-
     def catalog
       Endpoint::Catalog
     end

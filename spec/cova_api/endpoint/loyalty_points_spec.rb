@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'oauth2'
-
 RSpec.describe CovaApi::Endpoint::LoyaltyPoints do
   it 'has a url' do
     expect(CovaApi::Endpoint::LoyaltyPoints.url).to eq('https://iqloyalty.iqmetrix.net')

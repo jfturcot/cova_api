@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'oauth2'
-
 RSpec.describe CovaApi::Endpoint::SalesInvoice do
   it 'has a url' do
     expect(CovaApi::Endpoint::SalesInvoice.url).to eq('https://invoice.iqmetrix.net')

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'oauth2'
-
 RSpec.describe CovaApi::Endpoint::InventoryAvailability do
   it 'has a prefix' do
     expect(CovaApi::Endpoint::InventoryAvailability.prefix).to eq('/availability/v1')

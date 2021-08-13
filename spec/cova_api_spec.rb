@@ -11,6 +11,7 @@ RSpec.describe CovaApi do
       password: 'password',
       client_id: 'client_id',
       client_secret: 'client_secret',
+      company_id: '123',
       token_hash: {}
     )
   end

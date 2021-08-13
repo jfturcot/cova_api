@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'oauth2'
-
 class TestConnection
   extend CovaApi::Endpoint::Base
 end
@@ -52,6 +50,7 @@ RSpec.describe CovaApi::Endpoint::Base do
         password: 'password',
         client_id: 'client_id',
         client_secret: 'client_secret',
+        company_id: '123',
         token_hash: {}
       )
     end

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'oauth2'
-
 RSpec.describe CovaApi::Endpoint::ReasonCodes do
   it 'has a url' do
     expect(CovaApi::Endpoint::ReasonCodes.url).to eq('https://reasoncode.iqmetrix.net')

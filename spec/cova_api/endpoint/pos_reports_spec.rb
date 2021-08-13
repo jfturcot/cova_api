@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'oauth2'
-
 RSpec.describe CovaApi::Endpoint::PosReports do
   it 'has a prefix' do
     expect(CovaApi::Endpoint::PosReports.prefix).to eq('/posreports/v1')

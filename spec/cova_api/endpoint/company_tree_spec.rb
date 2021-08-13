@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'oauth2'
-
 RSpec.describe CovaApi::Endpoint::CompanyTree do
   it 'has a url' do
     expect(CovaApi::Endpoint::CompanyTree.url).to eq('https://entitymanager.iqmetrix.net')

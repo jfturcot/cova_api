@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'oauth2'
-
 RSpec.describe CovaApi::Endpoint::UserManagement do
   it 'has a url' do
     expect(CovaApi::Endpoint::UserManagement.url).to eq('https://usermanager.iqmetrix.net')
