@@ -11,11 +11,11 @@ module CovaApi
         end
       end
 
-      def self.url
+      def url
         'https://api.covasoft.net'
       end
 
-      def self.prefix
+      def prefix
         '/v1'
       end
 
