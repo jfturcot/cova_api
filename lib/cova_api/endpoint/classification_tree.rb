@@ -4,7 +4,10 @@ module CovaApi
   module Endpoint
     class ClassificationTree
       extend Base
-      URL = 'https://productlibrary.iqmetrix.net'
+
+      def self.prefix
+        '/productlibrary/v1'
+      end
     end
   end
 end

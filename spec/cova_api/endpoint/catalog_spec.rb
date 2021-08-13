@@ -3,8 +3,8 @@
 require 'oauth2'
 
 RSpec.describe CovaApi::Endpoint::Catalog do
-  it 'has a base url' do
-    expect(CovaApi::Endpoint::Catalog::URL).to eq('https://catalogs.iqmetrix.net')
+  it 'has a prefix' do
+    expect(CovaApi::Endpoint::Catalog.prefix).to eq('/catalogs/v1')
   end
 
   it 'extends CovaApi::Endpoint::Base' do

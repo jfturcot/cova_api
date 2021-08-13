@@ -3,8 +3,8 @@
 require 'oauth2'
 
 RSpec.describe CovaApi::Endpoint::CompanyTree do
-  it 'has a base url' do
-    expect(CovaApi::Endpoint::CompanyTree::URL).to eq('https://entitymanager.iqmetrix.net')
+  it 'has a url' do
+    expect(CovaApi::Endpoint::CompanyTree.url).to eq('https://entitymanager.iqmetrix.net')
   end
 
   it 'extends CovaApi::Endpoint::Base' do

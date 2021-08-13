@@ -2,11 +2,11 @@
 
 module CovaApi
   module Endpoint
-    class Catalog
+    class SalesOrder
       extend Base
 
       def self.prefix
-        '/catalogs/v1'
+        '/covaorderintake/v1'
       end
     end
   end

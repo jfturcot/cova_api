@@ -4,8 +4,10 @@ module CovaApi
   module Endpoint
     class InventoryAvailability
       extend Base
-      URL = 'https://api.covasoft.net'
-      PREFIX = '/availability/v1'
+
+      def self.prefix
+        '/availability/v1'
+      end
     end
   end
 end

@@ -4,7 +4,10 @@ module CovaApi
   module Endpoint
     class PosReports
       extend Base
-      URL = 'https://posreports.iqmetrix.net'
+
+      def self.prefix
+        '/posreports/v1'
+      end
     end
   end
 end

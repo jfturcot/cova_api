@@ -2,9 +2,12 @@
 
 module CovaApi
   module Endpoint
-    class SaleInvoice
+    class Customer
       extend Base
-      URL = 'https://invoice.iqmetrix.net'
+
+      def self.url
+        'https://crm.iqmetrix.net'
+      end
     end
   end
 end

@@ -4,8 +4,10 @@ module CovaApi
   module Endpoint
     class Promotions
       extend Base
-      URL = 'https://api.iqmetrix.net'
-      PREFIX = '/pospromotions/v1'
+
+      def self.prefix
+        '/pospromotions/v2'
+      end
     end
   end
 end

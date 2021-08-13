@@ -2,11 +2,11 @@
 
 module CovaApi
   module Endpoint
-    class Catalog
+    class PaymentMethod
       extend Base
 
       def self.prefix
-        '/catalogs/v1'
+        '/paymentmethods/v1'
       end
     end
   end

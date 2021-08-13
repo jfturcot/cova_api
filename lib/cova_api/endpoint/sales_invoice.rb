@@ -2,10 +2,12 @@
 
 module CovaApi
   module Endpoint
-    class Orders
+    class SalesInvoice
       extend Base
-      URL = 'https://api.iqmetrix.net'
-      PREFIX = '/covaorderintake/v1'
+
+      def self.url
+        'https://invoice.iqmetrix.net'
+      end
     end
   end
 end

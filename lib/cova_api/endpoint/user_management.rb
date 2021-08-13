@@ -2,9 +2,12 @@
 
 module CovaApi
   module Endpoint
-    class Employees
+    class UserManagement
       extend Base
-      URL = 'https://usermanager.iqmetrix.net'
+
+      def self.url
+        'https://usermanager.iqmetrix.net'
+      end
     end
   end
 end

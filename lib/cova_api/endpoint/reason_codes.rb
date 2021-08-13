@@ -2,9 +2,12 @@
 
 module CovaApi
   module Endpoint
-    class Pricing
+    class ReasonCodes
       extend Base
-      URL = 'https://pricing.iqmetrix.net'
+
+      def self.url
+        'https://reasoncode.iqmetrix.net'
+      end
     end
   end
 end

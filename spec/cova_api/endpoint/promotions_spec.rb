@@ -3,12 +3,8 @@
 require 'oauth2'
 
 RSpec.describe CovaApi::Endpoint::Promotions do
-  it 'has a base url' do
-    expect(CovaApi::Endpoint::Promotions::URL).to eq('https://api.iqmetrix.net')
-  end
-
-  it 'has a base prefix' do
-    expect(CovaApi::Endpoint::Promotions::PREFIX).to eq('/pospromotions/v1')
+  it 'has a prefix' do
+    expect(CovaApi::Endpoint::Promotions.prefix).to eq('/pospromotions/v2')
   end
 
   it 'extends CovaApi::Endpoint::Base' do

@@ -2,9 +2,12 @@
 
 module CovaApi
   module Endpoint
-    class Customers
+    class GeneralLedger
       extend Base
-      URL = 'https://crm.iqmetrix.net'
+
+      def self.url
+        'https://generalledger.iqmetrix.net'
+      end
     end
   end
 end

@@ -3,8 +3,8 @@
 require 'oauth2'
 
 RSpec.describe CovaApi::Endpoint::ClassificationTree do
-  it 'has a base url' do
-    expect(CovaApi::Endpoint::ClassificationTree::URL).to eq('https://productlibrary.iqmetrix.net')
+  it 'has a prefix' do
+    expect(CovaApi::Endpoint::ClassificationTree.prefix).to eq('/productlibrary/v1')
   end
 
   it 'extends CovaApi::Endpoint::Base' do

@@ -3,8 +3,8 @@
 require 'oauth2'
 
 RSpec.describe CovaApi::Endpoint::LoyaltyPoints do
-  it 'has a base url' do
-    expect(CovaApi::Endpoint::LoyaltyPoints::URL).to eq('https://iqloyalty.iqmetrix.net')
+  it 'has a url' do
+    expect(CovaApi::Endpoint::LoyaltyPoints.url).to eq('https://iqloyalty.iqmetrix.net')
   end
 
   it 'extends CovaApi::Endpoint::Base' do

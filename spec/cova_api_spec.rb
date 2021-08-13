@@ -48,25 +48,14 @@ RSpec.describe CovaApi do
     end
   end
 
-  describe '.customers' do
-    it 'returns CovaApi::Endpoint::Customers' do
-      expect(CovaApi.customers).to eq(CovaApi::Endpoint::Customers)
+  describe '.customer' do
+    it 'returns CovaApi::Endpoint::Customer' do
+      expect(CovaApi.customer).to eq(CovaApi::Endpoint::Customer)
     end
 
-    it 'runs CovaApi::Endpoint::Customers class methods' do
-      expect(CovaApi::Endpoint::Customers).to receive(:get).with('/test')
-      CovaApi.customers.get('/test')
-    end
-  end
-
-  describe '.customers' do
-    it 'returns CovaApi::Endpoint::Customers' do
-      expect(CovaApi.customers).to eq(CovaApi::Endpoint::Customers)
-    end
-
-    it 'runs CovaApi::Endpoint::Customers class methods' do
-      expect(CovaApi::Endpoint::Customers).to receive(:get).with('/test')
-      CovaApi.customers.get('/test')
+    it 'runs CovaApi::Endpoint::Customer class methods' do
+      expect(CovaApi::Endpoint::Customer).to receive(:get).with('/test')
+      CovaApi.customer.get('/test')
     end
   end
 
@@ -81,14 +70,14 @@ RSpec.describe CovaApi do
     end
   end
 
-  describe '.employees' do
-    it 'returns CovaApi::Endpoint::Employees' do
-      expect(CovaApi.employees).to eq(CovaApi::Endpoint::Employees)
+  describe '.general_ledger' do
+    it 'returns CovaApi::Endpoint::GeneralLedger' do
+      expect(CovaApi.general_ledger).to eq(CovaApi::Endpoint::GeneralLedger)
     end
 
-    it 'runs CovaApi::Endpoint::Employees class methods' do
-      expect(CovaApi::Endpoint::Employees).to receive(:get).with('/test')
-      CovaApi.employees.get('/test')
+    it 'runs CovaApi::Endpoint::GeneralLedger class methods' do
+      expect(CovaApi::Endpoint::GeneralLedger).to receive(:get).with('/test')
+      CovaApi.general_ledger.get('/test')
     end
   end
 
@@ -103,6 +92,17 @@ RSpec.describe CovaApi do
     end
   end
 
+  describe '.item_pricing' do
+    it 'returns CovaApi::Endpoint::ItemPricing' do
+      expect(CovaApi.item_pricing).to eq(CovaApi::Endpoint::ItemPricing)
+    end
+
+    it 'runs CovaApi::Endpoint::ItemPricing class methods' do
+      expect(CovaApi::Endpoint::ItemPricing).to receive(:get).with('/test')
+      CovaApi.item_pricing.get('/test')
+    end
+  end
+
   describe '.loyalty_points' do
     it 'returns CovaApi::Endpoint::LoyaltyPoints' do
       expect(CovaApi.loyalty_points).to eq(CovaApi::Endpoint::LoyaltyPoints)
@@ -114,14 +114,14 @@ RSpec.describe CovaApi do
     end
   end
 
-  describe '.orders' do
-    it 'returns CovaApi::Endpoint::Orders' do
-      expect(CovaApi.orders).to eq(CovaApi::Endpoint::Orders)
+  describe '.payment_method' do
+    it 'returns CovaApi::Endpoint::PaymentMethod' do
+      expect(CovaApi.payment_method).to eq(CovaApi::Endpoint::PaymentMethod)
     end
 
-    it 'runs CovaApi::Endpoint::Orders class methods' do
-      expect(CovaApi::Endpoint::Orders).to receive(:get).with('/test')
-      CovaApi.orders.get('/test')
+    it 'runs CovaApi::Endpoint::PaymentMethod class methods' do
+      expect(CovaApi::Endpoint::PaymentMethod).to receive(:get).with('/test')
+      CovaApi.payment_method.get('/test')
     end
   end
 
@@ -147,17 +147,6 @@ RSpec.describe CovaApi do
     end
   end
 
-  describe '.pricing' do
-    it 'returns CovaApi::Endpoint::Pricing' do
-      expect(CovaApi.pricing).to eq(CovaApi::Endpoint::Pricing)
-    end
-
-    it 'runs CovaApi::Endpoint::Pricing class methods' do
-      expect(CovaApi::Endpoint::Pricing).to receive(:get).with('/test')
-      CovaApi.pricing.get('/test')
-    end
-  end
-
   describe '.promotions' do
     it 'returns CovaApi::Endpoint::Promotions' do
       expect(CovaApi.promotions).to eq(CovaApi::Endpoint::Promotions)
@@ -169,14 +158,36 @@ RSpec.describe CovaApi do
     end
   end
 
-  describe '.sale_invoice' do
-    it 'returns CovaApi::Endpoint::SaleInvoice' do
-      expect(CovaApi.sale_invoice).to eq(CovaApi::Endpoint::SaleInvoice)
+  describe '.reason_codes' do
+    it 'returns CovaApi::Endpoint::ReasonCodes' do
+      expect(CovaApi.reason_codes).to eq(CovaApi::Endpoint::ReasonCodes)
     end
 
-    it 'runs CovaApi::Endpoint::SaleInvoice class methods' do
-      expect(CovaApi::Endpoint::SaleInvoice).to receive(:get).with('/test')
-      CovaApi.sale_invoice.get('/test')
+    it 'runs CovaApi::Endpoint::ReasonCodes class methods' do
+      expect(CovaApi::Endpoint::ReasonCodes).to receive(:get).with('/test')
+      CovaApi.reason_codes.get('/test')
+    end
+  end
+
+  describe '.sales_invoice' do
+    it 'returns CovaApi::Endpoint::SalesInvoice' do
+      expect(CovaApi.sales_invoice).to eq(CovaApi::Endpoint::SalesInvoice)
+    end
+
+    it 'runs CovaApi::Endpoint::SalesInvoice class methods' do
+      expect(CovaApi::Endpoint::SalesInvoice).to receive(:get).with('/test')
+      CovaApi.sales_invoice.get('/test')
+    end
+  end
+
+  describe '.sales_order' do
+    it 'returns CovaApi::Endpoint::SalesOrder' do
+      expect(CovaApi.sales_order).to eq(CovaApi::Endpoint::SalesOrder)
+    end
+
+    it 'runs CovaApi::Endpoint::SalesOrder class methods' do
+      expect(CovaApi::Endpoint::SalesOrder).to receive(:get).with('/test')
+      CovaApi.sales_order.get('/test')
     end
   end
 
@@ -188,6 +199,17 @@ RSpec.describe CovaApi do
     it 'runs CovaApi::Endpoint::Taxes class methods' do
       expect(CovaApi::Endpoint::Taxes).to receive(:get).with('/test')
       CovaApi.taxes.get('/test')
+    end
+  end
+
+  describe '.user_management' do
+    it 'returns CovaApi::Endpoint::UserManagement' do
+      expect(CovaApi.user_management).to eq(CovaApi::Endpoint::UserManagement)
+    end
+
+    it 'runs CovaApi::Endpoint::UserManagement class methods' do
+      expect(CovaApi::Endpoint::UserManagement).to receive(:get).with('/test')
+      CovaApi.user_management.get('/test')
     end
   end
 end

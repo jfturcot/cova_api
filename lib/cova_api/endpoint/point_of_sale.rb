@@ -4,8 +4,10 @@ module CovaApi
   module Endpoint
     class PointOfSale
       extend Base
-      URL = 'https://api.covasoft.net'
-      PREFIX = '/pointofsale'
+
+      def self.prefix
+        '/pointofsale'
+      end
     end
   end
 end

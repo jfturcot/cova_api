@@ -4,8 +4,10 @@ module CovaApi
   module Endpoint
     class Dispensary
       extend Base
-      URL = 'https://api.covasoft.net'
-      PREFIX = '/dispensary'
+
+      def self.prefix
+        '/dispensary'
+      end
     end
   end
 end
