@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 RSpec.describe CovaApi::Product do
-  let(:product) do
+  let(:product_data) do
     {
+      'Id' => 234,
       'CatalogSku' => '2XXXXXXX'
     }
   end
@@ -13,6 +14,8 @@ RSpec.describe CovaApi::Product do
     }
   end
 
+  let(:product) { CovaApi::Product.new product_data }
+
   let(:oauth2_reponse) { OAuth2::Response.new(Faraday::Response.new) }
 
   before do
@@ -22,7 +25,7 @@ RSpec.describe CovaApi::Product do
 
   describe '.all' do
     before do
-      allow(oauth2_reponse).to receive(:parsed) { [product] }
+      allow(oauth2_reponse).to receive(:parsed) { [product_data] }
     end
 
     it 'calls the api' do
@@ -32,7 +35,7 @@ RSpec.describe CovaApi::Product do
 
     it 'returns the products' do
       results = CovaApi::Product.all
-      expect(results.first['CatalogSku']).to eq(product['CatalogSku'])
+      expect(results.first.data['CatalogSku']).to eq(product_data['CatalogSku'])
     end
   end
 
@@ -50,7 +53,22 @@ RSpec.describe CovaApi::Product do
 
     it 'returns the products' do
       results = CovaApi::Product.search('test123')
-      expect(results.first['Name']).to eq(searched_product['Name'])
+      expect(results.first.data['Name']).to eq(searched_product['Name'])
+    end
+  end
+
+  it 'initializes id' do
+    expect(product.id).to eq(234)
+  end
+
+  it 'initializes data' do
+    expect(product.data['Id']).to eq(234)
+  end
+
+  describe '#inventory_by_location' do
+    it 'gets the inventory' do
+      expect(CovaApi::Inventory).to receive(:by_product_for_location).with(product_id: 234, location_id: 987)
+      product.inventory_by_location 987
     end
   end
 end

@@ -2,6 +2,8 @@
 
 require 'cova_api/version'
 require 'cova_api/customer'
+require 'cova_api/inventory'
+require 'cova_api/location'
 require 'cova_api/product'
 require 'cova_api/authentication'
 require 'cova_api/endpoint/base'
