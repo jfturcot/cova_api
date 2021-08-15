@@ -19,7 +19,7 @@ module CovaApi
       @id = data['CatalogItemId']
     end
 
-    def inventory(location_id)
+    def inventory_by_location(location_id)
       CovaApi::Inventory.find_by(product_id: id, location_id: location_id)
     end
   end

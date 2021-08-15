@@ -25,11 +25,12 @@ module CovaApi
       new({ 'Id' => product_id, 'Quantity' => 0 })
     end
 
-    attr_accessor :data, :product_id, :quantity
+    attr_accessor :data, :product_id, :location_id, :quantity
 
     def initialize(data)
       @data = data
       @product_id = data['Id']
+      @location_id = data['EntityId']
       @quantity = data['Quantity']
     end
 

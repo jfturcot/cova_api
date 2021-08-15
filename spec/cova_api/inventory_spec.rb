@@ -4,6 +4,7 @@ RSpec.describe CovaApi::Location do
   let(:inventory_data) do
     {
       'Id' => '02ce6e3c-b569-49f5-8da9-ffffffffffff',
+      'EntityId' => 123456,
       'Quantity' => 11
     }
   end
@@ -79,6 +80,10 @@ RSpec.describe CovaApi::Location do
 
   it 'initializes product_id' do
     expect(inventory.product_id).to eq('02ce6e3c-b569-49f5-8da9-ffffffffffff')
+  end
+
+  it 'initializes product_id' do
+    expect(inventory.location_id).to eq(123_456)
   end
 
   it 'initializes quantity' do
