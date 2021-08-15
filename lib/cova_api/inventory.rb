@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'json'
+
 module CovaApi
   class Inventory
     def self.by_location(location_id)
@@ -16,6 +18,11 @@ module CovaApi
           "/Companies(#{CovaApi.company_id})/Entities(#{location_id})/CatalogItems(#{product_id})/SellingRoomOnly"
         )
       )
+    rescue OAuth2::Error => e
+      message = e.message && JSON.parse(e.message)
+      raise unless message && message['Message'] == 'Resource cannot be found'
+
+      new({ 'Id' => product_id, 'Quantity' => 0 })
     end
 
     attr_accessor :data, :product_id, :quantity

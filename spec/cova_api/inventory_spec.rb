@@ -54,6 +54,27 @@ RSpec.describe CovaApi::Location do
       results = CovaApi::Inventory.find_by location_id: 987, product_id: 555
       expect(results.quantity).to eq(inventory_data['Quantity'])
     end
+
+    describe 'when no inventory is available for the product' do
+      before do
+        faraday_env = Faraday::Env.from(
+          status: 404,
+          body: '{"Message":"Resource cannot be found"}',
+          response_headers: { 'Content-Type' => 'application/hal+json' }
+        )
+        faraday_response = Faraday::Response.new
+        faraday_response.finish(faraday_env)
+        error = OAuth2::Error.new OAuth2::Response.new(faraday_response)
+        expect(CovaApi.inventory_availability).to receive(:get).with(
+          '/Companies(123)/Entities(987)/CatalogItems(555)/SellingRoomOnly'
+        ).and_raise(error)
+      end
+
+      it 'returns an inventory of zero' do
+        results = CovaApi::Inventory.find_by location_id: 987, product_id: 555
+        expect(results.quantity).to eq(0)
+      end
+    end
   end
 
   it 'initializes product_id' do
