@@ -3,7 +3,7 @@
 RSpec.describe CovaApi::Product do
   let(:product_data) do
     {
-      'Id' => 234,
+      'CatalogItemId' => 234,
       'CatalogSku' => '2XXXXXXX'
     }
   end
@@ -62,13 +62,13 @@ RSpec.describe CovaApi::Product do
   end
 
   it 'initializes data' do
-    expect(product.data['Id']).to eq(234)
+    expect(product.data['CatalogItemId']).to eq(234)
   end
 
-  describe '#inventory_by_location' do
+  describe '#inventory' do
     it 'gets the inventory' do
-      expect(CovaApi::Inventory).to receive(:by_product_for_location).with(product_id: 234, location_id: 987)
-      product.inventory_by_location 987
+      expect(CovaApi::Inventory).to receive(:find_by).with(product_id: 234, location_id: 987)
+      product.inventory 987
     end
   end
 end

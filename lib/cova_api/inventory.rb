@@ -10,10 +10,10 @@ module CovaApi
       ).map { |data| new(data) }
     end
 
-    def self.by_product_for_location(location_id:, product_id:)
+    def self.find_by(location_id:, product_id:)
       new parsed_inventory(
         CovaApi.inventory_availability.get(
-          "/Companies(#{CovaApi.company_id})/Entities(#{location_id})/CatalogItems(#{product_id})"
+          "/Companies(#{CovaApi.company_id})/Entities(#{location_id})/CatalogItems(#{product_id})/SellingRoomOnly"
         )
       )
     end
@@ -28,7 +28,7 @@ module CovaApi
 
     private_class_method def self.parsed_inventory(result)
       json = JSON.parse result.body
-      json['_embedded']['self']
+      json['_embedded']['self'] || json
     end
   end
 end

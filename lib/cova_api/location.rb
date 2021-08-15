@@ -15,7 +15,7 @@ module CovaApi
     end
 
     def inventory
-      CovaApi::Location.by_location id
+      CovaApi::Inventory.by_location id
     end
   end
 end

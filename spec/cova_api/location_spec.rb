@@ -50,7 +50,7 @@ RSpec.describe CovaApi::Location do
 
   describe '#inventory' do
     it 'gets the inventory' do
-      expect(CovaApi::Location).to receive(:by_location).with(987)
+      expect(CovaApi::Inventory).to receive(:by_location).with(987)
       location.inventory
     end
   end

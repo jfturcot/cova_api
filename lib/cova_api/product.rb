@@ -16,11 +16,11 @@ module CovaApi
 
     def initialize(data)
       @data = data
-      @id = data['Id']
+      @id = data['CatalogItemId']
     end
 
-    def inventory_by_location(location_id)
-      CovaApi::Inventory.by_product_for_location(product_id: id, location_id: location_id)
+    def inventory(location_id)
+      CovaApi::Inventory.find_by(product_id: id, location_id: location_id)
     end
   end
 end

@@ -36,7 +36,7 @@ RSpec.describe CovaApi::Location do
     end
   end
 
-  describe '.by_product_for_location' do
+  describe '.find_by' do
     before do
       allow(oauth2_reponse).to receive(:parsed) { [inventory_data] }
       allow(oauth2_reponse).to receive(:body) { { '_embedded' => { 'self' => inventory_data } }.to_json }
@@ -45,13 +45,13 @@ RSpec.describe CovaApi::Location do
 
     it 'calls the api' do
       expect(CovaApi.inventory_availability).to receive(:get).with(
-        '/Companies(123)/Entities(987)/CatalogItems(555)'
+        '/Companies(123)/Entities(987)/CatalogItems(555)/SellingRoomOnly'
       ) { oauth2_reponse }
-      CovaApi::Inventory.by_product_for_location location_id: 987, product_id: 555
+      CovaApi::Inventory.find_by location_id: 987, product_id: 555
     end
 
     it 'returns the inventories' do
-      results = CovaApi::Inventory.by_product_for_location location_id: 987, product_id: 555
+      results = CovaApi::Inventory.find_by location_id: 987, product_id: 555
       expect(results.quantity).to eq(inventory_data['Quantity'])
     end
   end
