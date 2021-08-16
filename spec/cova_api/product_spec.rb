@@ -57,6 +57,29 @@ RSpec.describe CovaApi::Product do
     end
   end
 
+  describe '.find' do
+    before do
+      allow(oauth2_reponse).to receive(:parsed) { searched_product }
+    end
+
+    it 'calls the api' do
+      expect(CovaApi.catalog).to receive(:get).with('/Companies(123)/Catalog/Items(aabb-1234)/ProductDetails') do
+        oauth2_reponse
+      end
+      CovaApi::Product.find 'aabb-1234'
+    end
+
+    it 'returns the product' do
+      results = CovaApi::Product.find 'aabb-1234'
+      expect(results.data['Name']).to eq(searched_product['Name'])
+    end
+
+    it 'adds the id to the product' do
+      results = CovaApi::Product.find 'aabb-1234'
+      expect(results.id).to eq('aabb-1234')
+    end
+  end
+
   it 'initializes id' do
     expect(product.id).to eq(234)
   end

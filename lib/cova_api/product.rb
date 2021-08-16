@@ -12,6 +12,11 @@ module CovaApi
       result.parsed['Items'].map { |data| new data }
     end
 
+    def self.find(id)
+      result = CovaApi.catalog.get "/Companies(#{CovaApi.company_id})/Catalog/Items(#{id})/ProductDetails"
+      new result.parsed.merge('CatalogItemId' => id)
+    end
+
     attr_accessor :data, :id
 
     def initialize(data)
