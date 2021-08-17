@@ -27,5 +27,9 @@ module CovaApi
     def inventory_by_location(location_id)
       CovaApi::Inventory.find_by(product_id: id, location_id: location_id)
     end
+
+    def pricing_by_location(location_id)
+      CovaApi::Pricing.find_by(product_id: id, location_id: location_id)
+    end
   end
 end

@@ -17,7 +17,7 @@ RSpec.describe CovaApi::Location do
     }
   end
 
-  let(:oauth2_reponse) { OAuth2::Response.new(Faraday::Response.new) }
+  let(:oauth2_response) { OAuth2::Response.new(Faraday::Response.new) }
 
   before do
     allow(CovaApi).to receive(:company_id) { '123' }
@@ -25,12 +25,12 @@ RSpec.describe CovaApi::Location do
 
   describe '.all' do
     before do
-      allow(oauth2_reponse).to receive(:parsed) { [location_data] }
-      allow(CovaApi.company_tree).to receive(:get) { oauth2_reponse }
+      allow(oauth2_response).to receive(:parsed) { [location_data] }
+      allow(CovaApi.company_tree).to receive(:get) { oauth2_response }
     end
 
     it 'calls the api' do
-      expect(CovaApi.company_tree).to receive(:get).with('/Companies(123)/Locations') { oauth2_reponse }
+      expect(CovaApi.company_tree).to receive(:get).with('/Companies(123)/Locations') { oauth2_response }
       CovaApi::Location.all
     end
 

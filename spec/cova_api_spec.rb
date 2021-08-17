@@ -93,17 +93,6 @@ RSpec.describe CovaApi do
     end
   end
 
-  describe '.item_pricing' do
-    it 'returns CovaApi::Endpoint::ItemPricing' do
-      expect(CovaApi.item_pricing).to eq(CovaApi::Endpoint::ItemPricing)
-    end
-
-    it 'runs CovaApi::Endpoint::ItemPricing class methods' do
-      expect(CovaApi::Endpoint::ItemPricing).to receive(:get).with('/test')
-      CovaApi.item_pricing.get('/test')
-    end
-  end
-
   describe '.loyalty_points' do
     it 'returns CovaApi::Endpoint::LoyaltyPoints' do
       expect(CovaApi.loyalty_points).to eq(CovaApi::Endpoint::LoyaltyPoints)
@@ -123,6 +112,17 @@ RSpec.describe CovaApi do
     it 'runs CovaApi::Endpoint::PaymentMethod class methods' do
       expect(CovaApi::Endpoint::PaymentMethod).to receive(:get).with('/test')
       CovaApi.payment_method.get('/test')
+    end
+  end
+
+  describe '.pricing' do
+    it 'returns CovaApi::Endpoint::Pricing' do
+      expect(CovaApi.pricing).to eq(CovaApi::Endpoint::Pricing)
+    end
+
+    it 'runs CovaApi::Endpoint::Pricing class methods' do
+      expect(CovaApi::Endpoint::Pricing).to receive(:get).with('/test')
+      CovaApi.pricing.get('/test')
     end
   end
 

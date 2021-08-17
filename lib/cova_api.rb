@@ -4,6 +4,7 @@ require 'cova_api/version'
 require 'cova_api/customer'
 require 'cova_api/inventory'
 require 'cova_api/location'
+require 'cova_api/pricing'
 require 'cova_api/product'
 require 'cova_api/authentication'
 require 'cova_api/endpoint/base'
@@ -14,11 +15,11 @@ require 'cova_api/endpoint/customer'
 require 'cova_api/endpoint/dispensary'
 require 'cova_api/endpoint/general_ledger'
 require 'cova_api/endpoint/inventory_availability'
-require 'cova_api/endpoint/item_pricing'
 require 'cova_api/endpoint/loyalty_points'
 require 'cova_api/endpoint/payment_method'
 require 'cova_api/endpoint/point_of_sale'
 require 'cova_api/endpoint/pos_reports'
+require 'cova_api/endpoint/pricing'
 require 'cova_api/endpoint/promotions'
 require 'cova_api/endpoint/reason_codes'
 require 'cova_api/endpoint/sales_invoice'
@@ -56,10 +57,6 @@ module CovaApi
       Endpoint::InventoryAvailability
     end
 
-    def item_pricing
-      Endpoint::ItemPricing
-    end
-
     def loyalty_points
       Endpoint::LoyaltyPoints
     end
@@ -74,6 +71,10 @@ module CovaApi
 
     def pos_reports
       Endpoint::PosReports
+    end
+
+    def pricing
+      Endpoint::Pricing
     end
 
     def promotions

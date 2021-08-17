@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe CovaApi::Location do
+RSpec.describe CovaApi::Inventory do
   let(:inventory_data) do
     {
       'Id' => '02ce6e3c-b569-49f5-8da9-ffffffffffff',
@@ -11,7 +11,7 @@ RSpec.describe CovaApi::Location do
 
   let(:inventory) { CovaApi::Inventory.new inventory_data }
 
-  let(:oauth2_reponse) { OAuth2::Response.new(Faraday::Response.new) }
+  let(:oauth2_response) { OAuth2::Response.new(Faraday::Response.new) }
 
   before do
     allow(CovaApi).to receive(:company_id) { '123' }
@@ -19,15 +19,15 @@ RSpec.describe CovaApi::Location do
 
   describe '.by_location' do
     before do
-      allow(oauth2_reponse).to receive(:parsed) { [inventory_data] }
-      allow(oauth2_reponse).to receive(:body) { { '_embedded' => { 'self' => [inventory_data] } }.to_json }
-      allow(CovaApi.inventory_availability).to receive(:get) { oauth2_reponse }
+      allow(oauth2_response).to receive(:parsed) { [inventory_data] }
+      allow(oauth2_response).to receive(:body) { { '_embedded' => { 'self' => [inventory_data] } }.to_json }
+      allow(CovaApi.inventory_availability).to receive(:get) { oauth2_response }
     end
 
     it 'calls the api' do
       expect(CovaApi.inventory_availability).to receive(:get).with(
         '/Companies(123)/Entities(987)/CatalogItems/SellingRoomOnly'
-      ) { oauth2_reponse }
+      ) { oauth2_response }
       CovaApi::Inventory.by_location 987
     end
 
@@ -39,15 +39,15 @@ RSpec.describe CovaApi::Location do
 
   describe '.find_by' do
     before do
-      allow(oauth2_reponse).to receive(:parsed) { [inventory_data] }
-      allow(oauth2_reponse).to receive(:body) { { '_embedded' => { 'self' => inventory_data } }.to_json }
-      allow(CovaApi.inventory_availability).to receive(:get) { oauth2_reponse }
+      allow(oauth2_response).to receive(:parsed) { [inventory_data] }
+      allow(oauth2_response).to receive(:body) { { '_embedded' => { 'self' => inventory_data } }.to_json }
+      allow(CovaApi.inventory_availability).to receive(:get) { oauth2_response }
     end
 
     it 'calls the api' do
       expect(CovaApi.inventory_availability).to receive(:get).with(
         '/Companies(123)/Entities(987)/CatalogItems(555)/SellingRoomOnly'
-      ) { oauth2_reponse }
+      ) { oauth2_response }
       CovaApi::Inventory.find_by location_id: 987, product_id: 555
     end
 
@@ -82,7 +82,7 @@ RSpec.describe CovaApi::Location do
     expect(inventory.product_id).to eq('02ce6e3c-b569-49f5-8da9-ffffffffffff')
   end
 
-  it 'initializes product_id' do
+  it 'initializes location_id' do
     expect(inventory.location_id).to eq(123_456)
   end
 

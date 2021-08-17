@@ -2,7 +2,7 @@
 
 module CovaApi
   module Endpoint
-    class ItemPricing
+    class Pricing
       extend Base
 
       def self.prefix

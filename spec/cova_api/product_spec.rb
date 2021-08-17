@@ -16,20 +16,20 @@ RSpec.describe CovaApi::Product do
 
   let(:product) { CovaApi::Product.new product_data }
 
-  let(:oauth2_reponse) { OAuth2::Response.new(Faraday::Response.new) }
+  let(:oauth2_response) { OAuth2::Response.new(Faraday::Response.new) }
 
   before do
     allow(CovaApi).to receive(:company_id) { '123' }
-    allow(CovaApi.catalog).to receive(:get) { oauth2_reponse }
+    allow(CovaApi.catalog).to receive(:get) { oauth2_response }
   end
 
   describe '.all' do
     before do
-      allow(oauth2_reponse).to receive(:parsed) { [product_data] }
+      allow(oauth2_response).to receive(:parsed) { [product_data] }
     end
 
     it 'calls the api' do
-      expect(CovaApi.catalog).to receive(:get).with('/Companies(123)/Catalog/Items') { oauth2_reponse }
+      expect(CovaApi.catalog).to receive(:get).with('/Companies(123)/Catalog/Items') { oauth2_response }
       CovaApi::Product.all
     end
 
@@ -41,12 +41,12 @@ RSpec.describe CovaApi::Product do
 
   describe '.search' do
     before do
-      allow(oauth2_reponse).to receive(:parsed) { { 'Items' => [searched_product] } }
+      allow(oauth2_response).to receive(:parsed) { { 'Items' => [searched_product] } }
     end
 
     it 'calls the api' do
       expect(CovaApi.catalog).to receive(:get).with('/Companies(123)/Catalog/Search?SearchTerms=test123') do
-        oauth2_reponse
+        oauth2_response
       end
       CovaApi::Product.search 'test123'
     end
@@ -59,12 +59,12 @@ RSpec.describe CovaApi::Product do
 
   describe '.find' do
     before do
-      allow(oauth2_reponse).to receive(:parsed) { searched_product }
+      allow(oauth2_response).to receive(:parsed) { searched_product }
     end
 
     it 'calls the api' do
       expect(CovaApi.catalog).to receive(:get).with('/Companies(123)/Catalog/Items(aabb-1234)/ProductDetails') do
-        oauth2_reponse
+        oauth2_response
       end
       CovaApi::Product.find 'aabb-1234'
     end
