@@ -16,12 +16,12 @@ module CovaApi
 
     private_class_method def self.parsed_customers(result)
       json = JSON.parse result.body
-      json['_embedded']['self']
+      json['_embedded']['self'] || []
     end
 
     attr_accessor :data, :id
 
-    def initialize(data)
+    def initialize(data = {})
       @data = data
       @id = data['Id']
     end

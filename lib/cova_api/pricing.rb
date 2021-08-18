@@ -22,7 +22,7 @@ module CovaApi
 
     attr_accessor :data, :product_id, :location_id, :price
 
-    def initialize(data)
+    def initialize(data = {})
       @data = data
       @product_id = data['CatalogItemId']
       @location_id = data['EntityId']

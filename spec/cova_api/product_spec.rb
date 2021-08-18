@@ -88,6 +88,13 @@ RSpec.describe CovaApi::Product do
     expect(product.data['CatalogItemId']).to eq(234)
   end
 
+  describe 'when no data is provided' do
+    it 'creates an empty product' do
+      empty_product = CovaApi::Product.new
+      expect(empty_product.id).to be_nil
+    end
+  end
+
   describe '#inventory_by_location' do
     it 'gets the inventory' do
       expect(CovaApi::Inventory).to receive(:find_by).with(product_id: 234, location_id: 987)

@@ -48,6 +48,13 @@ RSpec.describe CovaApi::Location do
     expect(location.data['Name']).to eq('Main Location')
   end
 
+  describe 'when no data is provided' do
+    it 'creates an empty location' do
+      empty_location = CovaApi::Location.new
+      expect(empty_location.id).to be_nil
+    end
+  end
+
   describe '#inventory' do
     it 'gets the inventory' do
       expect(CovaApi::Inventory).to receive(:by_location).with(987)

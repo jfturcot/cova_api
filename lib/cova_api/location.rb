@@ -9,7 +9,7 @@ module CovaApi
 
     attr_accessor :data, :id
 
-    def initialize(data)
+    def initialize(data = {})
       @data = data
       @id = data['Id']
     end

@@ -93,4 +93,11 @@ RSpec.describe CovaApi::Inventory do
   it 'initializes data' do
     expect(inventory.data['Quantity']).to eq(11)
   end
+
+  describe 'when no data is provided' do
+    it 'creates an empty inventory' do
+      empty_inventory = CovaApi::Inventory.new
+      expect(empty_inventory.product_id).to be_nil
+    end
+  end
 end

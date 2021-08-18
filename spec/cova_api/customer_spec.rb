@@ -19,6 +19,10 @@ RSpec.describe CovaApi::Customer do
   end
 
   describe '.all' do
+    before do
+      allow(oauth2_response).to receive(:body) { { '_embedded' => { 'self' => [customer_data] } }.to_json }
+    end
+
     it 'calls the api' do
       expect(CovaApi.customer).to receive(:get).with('/Companies(123)/Customers') { oauth2_response }
       CovaApi::Customer.all
@@ -31,18 +35,35 @@ RSpec.describe CovaApi::Customer do
   end
 
   describe '.search' do
-    it 'calls the api' do
-      expect(CovaApi.customer).to(
-        receive(:get).with("/Companies(123)/CustomerSearch?$filter=Criteria eq 'jeff@email.com'")
-      ) do
-        oauth2_response
+    describe 'when customers are returned' do
+      before do
+        allow(oauth2_response).to receive(:body) { { '_embedded' => { 'self' => [customer_data] } }.to_json }
       end
-      CovaApi::Customer.search 'jeff@email.com'
+
+      it 'calls the api' do
+        expect(CovaApi.customer).to(
+          receive(:get).with("/Companies(123)/CustomerSearch?$filter=Criteria eq 'jeff@email.com'")
+        ) do
+          oauth2_response
+        end
+        CovaApi::Customer.search 'jeff@email.com'
+      end
+
+      it 'returns the customers' do
+        results = CovaApi::Customer.search('jeff@email.com')
+        expect(results.first.data['PrimaryName']).to eq(customer_data['PrimaryName'])
+      end
     end
 
-    it 'returns the customers' do
-      results = CovaApi::Customer.search('jeff@email.com')
-      expect(results.first.data['PrimaryName']).to eq(customer_data['PrimaryName'])
+    describe 'when no customers is returned' do
+      before do
+        allow(oauth2_response).to receive(:body) { { '_embedded' => {} }.to_json }
+      end
+
+      it 'returns no customers' do
+        results = CovaApi::Customer.search('jeff@email.com')
+        expect(results.size).to eq(0)
+      end
     end
   end
 
@@ -52,5 +73,12 @@ RSpec.describe CovaApi::Customer do
 
   it 'initializes data' do
     expect(customer.data['Id']).to eq(111)
+  end
+
+  describe 'when no data is provided' do
+    it 'creates an empty customer' do
+      empty_customer = CovaApi::Customer.new
+      expect(empty_customer.id).to be_nil
+    end
   end
 end

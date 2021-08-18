@@ -72,4 +72,11 @@ RSpec.describe CovaApi::Pricing do
   it 'initializes data' do
     expect(pricing.data['RegularPrice']).to eq(11.99)
   end
+
+  describe 'when no data is provided' do
+    it 'creates an empty pricing' do
+      empty_pricing = CovaApi::Pricing.new
+      expect(empty_pricing.product_id).to be_nil
+    end
+  end
 end
