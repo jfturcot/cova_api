@@ -28,6 +28,10 @@ require 'cova_api/endpoint/taxes'
 require 'cova_api/endpoint/user_management'
 
 module CovaApi
+  class RecordNotFound < StandardError; end
+
+  class AlreadyExists < StandardError; end
+
   class << self
     def catalog
       Endpoint::Catalog
