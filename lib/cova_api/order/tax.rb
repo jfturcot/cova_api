@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module CovaApi
-  class OrderTax
+  class Order::Tax
     attr_accessor :tax_id, :amount
 
     def initialize(tax_id:, amount:)

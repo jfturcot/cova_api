@@ -14,8 +14,8 @@ module CovaApi
       @first_name = first_name
       @last_name = last_name
       @customer_id = customer_id
-      @items = items.map { |item| OrderItem.new item }
-      @taxes = taxes.map { |tax| OrderTax.new tax }
+      @items = items.map { |item| Item.new item }
+      @taxes = taxes.map { |tax| Tax.new tax }
       @discount = discount
       @is_delivery = is_delivery
     end
@@ -31,7 +31,7 @@ module CovaApi
     def add_payments!(payments)
       raise RecordNotFound unless id
 
-      CovaApi.sales_order.post('/CovaOrderPayment', { body: OrderPayment.body_data(payments).to_json })
+      CovaApi.sales_order.post('/CovaOrderPayment', { body: Payment.body_data(payments).to_json })
     end
 
     private
@@ -46,7 +46,7 @@ module CovaApi
         'IsDelivery' => is_delivery,
         'Items' => items.map(&:body_data)
       }
-        .merge(discount ? OrderDiscount.body_data(discount) : {})
+        .merge(discount ? Discount.body_data(discount) : {})
         .merge(taxes.size.zero? ? {} : { 'Taxes' => taxes.map(&:body_data) })
     end
   end

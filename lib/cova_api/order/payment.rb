@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module CovaApi
-  class OrderPayment
+  class Order::Payment
     def self.body_data(payments)
       {
         'SaleID' => payments[:order_id],

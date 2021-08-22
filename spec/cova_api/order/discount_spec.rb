@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe CovaApi::OrderDiscount do
+RSpec.describe CovaApi::Order::Discount do
   let(:order_discounts_data) do
     [
       {
@@ -16,11 +16,11 @@ RSpec.describe CovaApi::OrderDiscount do
     ]
   end
 
-  let(:order_discount) { CovaApi::OrderDiscount.new(order_discounts_data.first[:value].first) }
+  let(:order_discount) { CovaApi::Order::Discount.new(order_discounts_data.first[:value].first) }
 
   describe '.body_data' do
     it 'builds the data' do
-      data = CovaApi::OrderDiscount.body_data(order_discounts_data)
+      data = CovaApi::Order::Discount.body_data(order_discounts_data)
       expect(data['Discount']['InvoiceLevel'].first['Name']).to eq('Test')
       expect(data['Discount']['Percentage']).to eq(10)
     end

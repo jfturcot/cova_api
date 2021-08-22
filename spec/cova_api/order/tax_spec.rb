@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe CovaApi::OrderTax do
+RSpec.describe CovaApi::Order::Tax do
   let(:order_tax_data) do
     {
       tax_id: 'tx-01',
@@ -8,7 +8,7 @@ RSpec.describe CovaApi::OrderTax do
     }
   end
 
-  let(:order_tax) { CovaApi::OrderTax.new(order_tax_data) }
+  let(:order_tax) { CovaApi::Order::Tax.new(order_tax_data) }
 
   it 'initializes tax_id' do
     expect(order_tax.tax_id).to eq('tx-01')

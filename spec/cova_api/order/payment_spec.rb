@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe CovaApi::OrderPayment do
+RSpec.describe CovaApi::Order::Payment do
   let(:order_payments_data) do
     {
       order_id: 'xxx-123',
@@ -14,7 +14,7 @@ RSpec.describe CovaApi::OrderPayment do
     }
   end
 
-  let(:order_payment) { CovaApi::OrderPayment.new(order_payments_data[:payments].first) }
+  let(:order_payment) { CovaApi::Order::Payment.new(order_payments_data[:payments].first) }
 
   before do
     allow(CovaApi).to receive(:company_id) { '123' }
@@ -22,7 +22,7 @@ RSpec.describe CovaApi::OrderPayment do
 
   describe '.body_data' do
     it 'builds the data' do
-      data = CovaApi::OrderPayment.body_data(order_payments_data)
+      data = CovaApi::Order::Payment.body_data(order_payments_data)
       expect(data['SaleID']).to eq('xxx-123')
       expect(data['Payments'].first['PreAuthorizationToken']).to eq('sss-234')
     end

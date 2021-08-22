@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module CovaApi
-  class OrderDiscount
+  class Order::Discount
     def self.body_data(discount_data)
       data = { 'Discount' => {} }
       discount_data.each do |d|

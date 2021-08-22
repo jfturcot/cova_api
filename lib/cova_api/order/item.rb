@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module CovaApi
-  class OrderItem
+  class Order::Item
     attr_accessor :name, :catalog_item_id, :quantity, :price
 
     def initialize(name:, catalog_item_id:, quantity:, price:)

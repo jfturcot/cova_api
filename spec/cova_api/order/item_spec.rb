@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe CovaApi::OrderItem do
+RSpec.describe CovaApi::Order::Item do
   let(:order_item_data) do
     {
       name: 'Item name',
@@ -10,7 +10,7 @@ RSpec.describe CovaApi::OrderItem do
     }
   end
 
-  let(:order_item) { CovaApi::OrderItem.new(order_item_data) }
+  let(:order_item) { CovaApi::Order::Item.new(order_item_data) }
 
   it 'initializes name' do
     expect(order_item.name).to eq('Item name')
