@@ -4,13 +4,41 @@ RSpec.describe CovaApi::Customer do
   let(:customer_data) do
     {
       'Id' => 111,
-      'PrimaryName' => 'Jeff'
+      'PrimaryName' => 'Jeff',
     }
   end
 
-  let(:customer) { CovaApi::Customer.new customer_data }
+  let(:customer) { CovaApi::Customer.new raw: customer_data }
 
-  let(:new_customer) { CovaApi::Customer.new({ 'PrimaryName': 'Bob' }) }
+  let(:new_customer) do
+    CovaApi::Customer.new(
+      first_name: 'Jeff',
+      last_name: nil,
+      birthday: '1996-08-21T17:15:43+00:00',
+      addresses: [
+        {
+          address1: '123 Street',
+          city: 'Montreal',
+          state_code: 'QC',
+          zip: 'X1X 1X1',
+          country_code: 'CA',
+          phone: '5141112222',
+          email: 'jeff@example.com'
+        }
+      ],
+      contact_methods: [
+        {
+          type: :email,
+          value: 'jeff@example.com',
+          default: true
+        },
+        {
+          type: :phone,
+          value: '5141112222'
+        }
+      ]
+    )
+  end
 
   let(:oauth2_response) { OAuth2::Response.new(Faraday::Response.new) }
 
@@ -31,7 +59,7 @@ RSpec.describe CovaApi::Customer do
 
     it 'returns the customers' do
       results = CovaApi::Customer.all
-      expect(results.first.data['PrimaryName']).to eq(customer_data['PrimaryName'])
+      expect(results.first.raw['PrimaryName']).to eq(customer_data['PrimaryName'])
     end
   end
 
@@ -52,7 +80,7 @@ RSpec.describe CovaApi::Customer do
 
       it 'returns the customers' do
         results = CovaApi::Customer.search('jeff@email.com')
-        expect(results.first.data['PrimaryName']).to eq(customer_data['PrimaryName'])
+        expect(results.first.raw['PrimaryName']).to eq(customer_data['PrimaryName'])
       end
     end
 
@@ -108,11 +136,11 @@ RSpec.describe CovaApi::Customer do
     expect(customer.id).to eq(111)
   end
 
-  it 'initializes data' do
-    expect(customer.data['Id']).to eq(111)
+  it 'initializes raw' do
+    expect(customer.raw['Id']).to eq(111)
   end
 
-  describe 'when no data is provided' do
+  describe 'when no raw data is provided' do
     it 'creates an empty customer' do
       empty_customer = CovaApi::Customer.new
       expect(empty_customer.id).to be_nil
@@ -127,14 +155,14 @@ RSpec.describe CovaApi::Customer do
 
     it 'calls the api' do
       expect(CovaApi.customer).to receive(:post).with(
-        '/Companies(123)/CustomerFull', { body: { 'PrimaryName': 'Bob' }.to_json }
+        '/Companies(123)/CustomerFull', { body: new_customer.send(:body_data).to_json }
       ) { oauth2_response }
       new_customer.save
     end
 
     it 'returns the saved customer' do
       results = new_customer.save
-      expect(results.data['Id']).to eq('987')
+      expect(results.id).to eq('987')
     end
 
     it 'raises AlreadyExists if id is set' do

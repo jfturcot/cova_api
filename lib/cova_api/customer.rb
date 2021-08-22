@@ -7,17 +7,17 @@ module CovaApi
     def self.all
       parsed_customers(
         CovaApi.customer.get("/Companies(#{CovaApi.company_id})/Customers")
-      ).map { |data| new data }
+      ).map { |data| new raw: data }
     end
 
     def self.search(query)
       parsed_customers(
         CovaApi.customer.get("/Companies(#{CovaApi.company_id})/CustomerSearch?$filter=Criteria eq '#{query}'")
-      ).map { |data| new data }
+      ).map { |data| new raw: data }
     end
 
     def self.find(id)
-      new parsed_customer(
+      new raw: parsed_customer(
         CovaApi.customer.get("/Companies(#{CovaApi.company_id})/CustomerFull(#{id})")
       )
     rescue OAuth2::Error => e
@@ -36,31 +36,68 @@ module CovaApi
       JSON.parse result.body
     end
 
-    attr_accessor :data, :id
+    attr_accessor :id, :first_name, :last_name, :birthday, :addresses, :contact_methods, :raw
 
-    def initialize(data = {})
-      setup data
+    def initialize(id: nil, first_name: nil, last_name: nil, birthday: nil, addresses: [], contact_methods: [], raw: {})
+      setup_raw(raw) unless raw.keys.size.zero?
+
+      @id ||= id
+      @first_name = first_name
+      @last_name = last_name
+      @birthday = birthday
+      @addresses = addresses.map { |address| Address.new address }
+      @contact_methods = contact_methods.map { |contact_method| ContactMethod.new contact_method }
     end
 
     def save
       raise AlreadyExists if id
 
-      setup parsed_customer(
-        CovaApi.customer.post("/Companies(#{CovaApi.company_id})/CustomerFull", { body: data.to_json })
+      setup_raw parsed_customer(
+        CovaApi.customer.post("/Companies(#{CovaApi.company_id})/CustomerFull", { body: body_data.to_json })
       )
-
       self
     end
 
     private
 
-    def setup(data)
-      @data = data
-      @id = data['Id']
+    def setup_raw(raw)
+      @raw = raw
+      @id = raw['Id']
     end
 
     def parsed_customer(result)
       Customer.send(:parsed_customer, result)
+    end
+
+    def body_data
+      {
+        'Addresses' => addresses.map(&:body_data),
+        'ContactMethods' => contact_methods.map(&:body_data),
+        'CustomerTypeId' => 2,
+        'PrimaryName' => first_name,
+        'FamilyName' => last_name,
+        'DateOfBirth' => birthday,
+        'Disabled' => false,
+        'DoNotContact' => false
+      }
+    end
+
+    def body_data_contact_method(type:, value:, default: false)
+      type_map = contact_type_map(type)
+      {
+        'ContactMethodCategoryId' => type_map[:category_id],
+        'ContactMethodTypeId' => type_map[:type_id],
+        'Value' => value,
+        'DoNotContact' => false,
+        'Default' => default
+      }
+    end
+
+    def contact_type_map(type)
+      {
+        category_id: type == :email ? 0 : 1,
+        type_id: type == :email ? 0 : 1
+      }
     end
   end
 end
