@@ -56,7 +56,10 @@ module CovaApi
         CovaApi.customer.post(
           "/Companies(#{CovaApi.company_id})/CustomerFull", {
             body: body_data.to_json,
-            headers: { 'Content-Type' => 'application/json' }
+            headers: {
+              'Accept' => 'application/json',
+              'Content-Type' => 'application/json'
+            }
           }
         )
       )

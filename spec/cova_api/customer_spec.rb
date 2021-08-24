@@ -158,7 +158,10 @@ RSpec.describe CovaApi::Customer do
         '/Companies(123)/CustomerFull',
         {
           body: new_customer.send(:body_data).to_json,
-          headers: { 'Content-Type' => 'application/json' }
+          headers: {
+            'Accept' => 'application/json',
+            'Content-Type' => 'application/json'
+          }
         }
       ) { oauth2_response }
       new_customer.save

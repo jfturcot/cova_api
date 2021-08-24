@@ -89,7 +89,10 @@ RSpec.describe CovaApi::Order do
         '/CovaOrder',
         {
           body: order.send(:body_data).to_json,
-          headers: { 'Content-Type' => 'application/json' }
+          headers: {
+            'Accept' => 'application/json',
+            'Content-Type' => 'application/json'
+          }
         }
       ) { oauth2_response }
       order.save
@@ -117,7 +120,10 @@ RSpec.describe CovaApi::Order do
         '/CovaOrderPayment',
         {
           body: CovaApi::Order::Payment.body_data(payments).to_json,
-          headers: { 'Content-Type' => 'application/json' }
+          headers: {
+            'Accept' => 'application/json',
+            'Content-Type' => 'application/json'
+          }
         }
       ) { oauth2_response }
       order.add_payments! payments

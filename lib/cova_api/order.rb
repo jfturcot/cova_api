@@ -27,7 +27,10 @@ module CovaApi
         '/CovaOrder',
         {
           body: body_data.to_json,
-          headers: { 'Content-Type' => 'application/json' }
+          headers: {
+            'Accept' => 'application/json',
+            'Content-Type' => 'application/json'
+          }
         }
       )
       self.id = response.parsed['id']
@@ -41,7 +44,10 @@ module CovaApi
         '/CovaOrderPayment',
         {
           body: Payment.body_data(payments).to_json,
-          headers: { 'Content-Type' => 'application/json' }
+          headers: {
+            'Accept' => 'application/json',
+            'Content-Type' => 'application/json'
+          }
         }
       )
     end
