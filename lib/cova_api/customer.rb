@@ -53,7 +53,12 @@ module CovaApi
       raise AlreadyExists if id
 
       setup_raw parsed_customer(
-        CovaApi.customer.post("/Companies(#{CovaApi.company_id})/CustomerFull", { body: body_data.to_json })
+        CovaApi.customer.post(
+          "/Companies(#{CovaApi.company_id})/CustomerFull", {
+            body: body_data.to_json,
+            headers: { 'Content-Type' => 'application/json' }
+          }
+        )
       )
       self
     end

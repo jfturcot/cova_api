@@ -155,7 +155,11 @@ RSpec.describe CovaApi::Customer do
 
     it 'calls the api' do
       expect(CovaApi.customer).to receive(:post).with(
-        '/Companies(123)/CustomerFull', { body: new_customer.send(:body_data).to_json }
+        '/Companies(123)/CustomerFull',
+        {
+          body: new_customer.send(:body_data).to_json,
+          headers: { 'Content-Type' => 'application/json' }
+        }
       ) { oauth2_response }
       new_customer.save
     end

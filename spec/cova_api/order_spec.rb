@@ -86,7 +86,11 @@ RSpec.describe CovaApi::Order do
 
     it 'calls the api' do
       expect(CovaApi.sales_order).to receive(:post).with(
-        '/CovaOrder', { body: order.send(:body_data).to_json }
+        '/CovaOrder',
+        {
+          body: order.send(:body_data).to_json,
+          headers: { 'Content-Type' => 'application/json' }
+        }
       ) { oauth2_response }
       order.save
     end
@@ -110,7 +114,11 @@ RSpec.describe CovaApi::Order do
     it 'calls the api' do
       order.id = '987'
       expect(CovaApi.sales_order).to receive(:post).with(
-        '/CovaOrderPayment', { body: CovaApi::Order::Payment.body_data(payments).to_json }
+        '/CovaOrderPayment',
+        {
+          body: CovaApi::Order::Payment.body_data(payments).to_json,
+          headers: { 'Content-Type' => 'application/json' }
+        }
       ) { oauth2_response }
       order.add_payments! payments
     end

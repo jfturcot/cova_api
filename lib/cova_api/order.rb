@@ -23,7 +23,13 @@ module CovaApi
     def save
       raise AlreadyExists if id
 
-      response = CovaApi.sales_order.post('/CovaOrder', { body: body_data.to_json })
+      response = CovaApi.sales_order.post(
+        '/CovaOrder',
+        {
+          body: body_data.to_json,
+          headers: { 'Content-Type' => 'application/json' }
+        }
+      )
       self.id = response.parsed['id']
       self
     end
@@ -31,7 +37,13 @@ module CovaApi
     def add_payments!(payments)
       raise RecordNotFound unless id
 
-      CovaApi.sales_order.post('/CovaOrderPayment', { body: Payment.body_data(payments).to_json })
+      CovaApi.sales_order.post(
+        '/CovaOrderPayment',
+        {
+          body: Payment.body_data(payments).to_json,
+          headers: { 'Content-Type' => 'application/json' }
+        }
+      )
     end
 
     private
