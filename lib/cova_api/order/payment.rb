@@ -6,7 +6,7 @@ module CovaApi
       {
         'SaleID' => payments[:order_id],
         'CompanyId' => CovaApi.company_id,
-        'TrackingNumber' => '',
+        'TrackingNumber' => payments[:tracking_number] || payments[:order_id],
         'Payments' => payments[:payments].map { |payment| new(payment).body_data }
       }
     end

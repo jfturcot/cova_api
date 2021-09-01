@@ -24,7 +24,15 @@ RSpec.describe CovaApi::Order::Payment do
     it 'builds the data' do
       data = CovaApi::Order::Payment.body_data(order_payments_data)
       expect(data['SaleID']).to eq('xxx-123')
+      expect(data['TrackingNumber']).to eq('xxx-123')
       expect(data['Payments'].first['PreAuthorizationToken']).to eq('sss-234')
+    end
+
+    context 'when tracking_number is supplied' do
+      it 'sets the TrackingNumber option' do
+        data = CovaApi::Order::Payment.body_data(order_payments_data.merge(tracking_number: 'abc-000'))
+        expect(data['TrackingNumber']).to eq('abc-000')
+      end
     end
   end
 
