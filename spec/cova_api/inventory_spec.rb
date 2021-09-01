@@ -26,7 +26,7 @@ RSpec.describe CovaApi::Inventory do
 
     it 'calls the api' do
       expect(CovaApi.inventory_availability).to receive(:get).with(
-        '/Companies(123)/Entities(987)/CatalogItems/SellingRoomOnly'
+        '/Companies(123)/Entities(987)/CatalogItems'
       ) { oauth2_response }
       CovaApi::Inventory.by_location 987
     end
@@ -46,7 +46,7 @@ RSpec.describe CovaApi::Inventory do
 
     it 'calls the api' do
       expect(CovaApi.inventory_availability).to receive(:get).with(
-        '/Companies(123)/Entities(987)/CatalogItems(555)/SellingRoomOnly'
+        '/Companies(123)/Entities(987)/CatalogItems(555)'
       ) { oauth2_response }
       CovaApi::Inventory.find_by location_id: 987, product_id: 555
     end
@@ -67,7 +67,7 @@ RSpec.describe CovaApi::Inventory do
         faraday_response.finish(faraday_env)
         error = OAuth2::Error.new OAuth2::Response.new(faraday_response)
         expect(CovaApi.inventory_availability).to receive(:get).with(
-          '/Companies(123)/Entities(987)/CatalogItems(555)/SellingRoomOnly'
+          '/Companies(123)/Entities(987)/CatalogItems(555)'
         ).and_raise(error)
       end
 

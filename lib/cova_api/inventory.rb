@@ -7,7 +7,7 @@ module CovaApi
     def self.by_location(location_id)
       parsed_inventory(
         CovaApi.inventory_availability.get(
-          "/Companies(#{CovaApi.company_id})/Entities(#{location_id})/CatalogItems/SellingRoomOnly"
+          "/Companies(#{CovaApi.company_id})/Entities(#{location_id})/CatalogItems"
         )
       ).map { |data| new(data) }
     end
@@ -15,7 +15,7 @@ module CovaApi
     def self.find_by(location_id:, product_id:)
       new parsed_inventory(
         CovaApi.inventory_availability.get(
-          "/Companies(#{CovaApi.company_id})/Entities(#{location_id})/CatalogItems(#{product_id})/SellingRoomOnly"
+          "/Companies(#{CovaApi.company_id})/Entities(#{location_id})/CatalogItems(#{product_id})"
         )
       )
     rescue OAuth2::Error => e
