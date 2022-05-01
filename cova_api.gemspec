@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = 'Ruby interface for the COVA API'
   spec.description   = 'Ruby interface for the COVA API'
-  spec.homepage      = 'https://github.com/jfturcot/cova_apis'
+  spec.homepage      = 'https://github.com/jfturcot/cova_api'
   spec.required_ruby_version = Gem::Requirement.new('>= 2.5.0')
 
   spec.metadata['homepage_uri'] = spec.homepage
@@ -31,4 +31,5 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency 'rake', '~> 12.0'
   spec.add_development_dependency 'rspec', '~> 3.0'
+  spec.add_development_dependency 'byebug'
 end
