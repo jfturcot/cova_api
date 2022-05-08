@@ -5,7 +5,8 @@ RSpec.describe CovaApi::Pricing do
     {
       'CatalogItemId' => '02ce6e3c-b569-49f5-8da9-ffffffffffff',
       'EntityId' => 123456,
-      'RegularPrice' => 11.99
+      'RegularPrice' => 11.99,
+      'OverridePrice' => 9.99
     }
   end
 
@@ -67,6 +68,10 @@ RSpec.describe CovaApi::Pricing do
 
   it 'initializes price' do
     expect(pricing.price).to eq(11.99)
+  end
+
+  it 'initializes override price' do
+    expect(pricing.override_price).to eq(9.99)
   end
 
   it 'initializes data' do

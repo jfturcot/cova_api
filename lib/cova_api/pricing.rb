@@ -20,13 +20,14 @@ module CovaApi
       ).first
     end
 
-    attr_accessor :data, :product_id, :location_id, :price
+    attr_accessor :data, :product_id, :location_id, :price, :override_price
 
     def initialize(data = {})
       @data = data
       @product_id = data['CatalogItemId']
       @location_id = data['EntityId']
       @price = data['RegularPrice']
+      @override_price = data['OverridePrice']
     end
 
     private_class_method def self.parsed_pricing(result)
