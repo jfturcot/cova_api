@@ -6,7 +6,7 @@ RSpec.describe CovaApi::Product do
       'CatalogItemId' => 234,
       'CatalogSku' => '2XXXXXXX',
       'DateAddedUtc' => '2022-01-30T16:09:44.017Z',
-      'MasterProductId' => '98765',
+      'MasterProductId' => '98765'
     }
   end
 
@@ -15,7 +15,7 @@ RSpec.describe CovaApi::Product do
       'CatalogItemId' => 334,
       'CatalogSku' => '3XXXXXXX',
       'DateAddedUtc' => '2022-02-10T16:09:44.017Z',
-      'MasterProductId' => '98765',
+      'MasterProductId' => '98765'
     }
   end
 
@@ -29,23 +29,21 @@ RSpec.describe CovaApi::Product do
     {
       'CatalogItems' => {
         '234' => product_data,
-        '334' => product_2_data,
+        '334' => product_2_data
       }
     }
   end
 
   let(:structured_products) do
     {
-      'Variations' => [
-
-      ],
+      'Variations' => [],
       'Name' => 'Master Product',
-      'Slug' => 'G123',
+      'Slug' => 'G123'
     }
   end
 
   let(:product) { CovaApi::Product.new product_data }
-  let(:product_2) { CovaApi::Product.new product_2_data }
+  let(:product2) { CovaApi::Product.new product_2_data }
 
   let(:oauth2_response) { OAuth2::Response.new(Faraday::Response.new) }
 
@@ -151,7 +149,7 @@ RSpec.describe CovaApi::Product do
   describe '.collection_for' do
     before do
       allow(oauth2_response).to receive(:parsed) { structured_products }
-      allow(CovaApi::Product).to receive(:fetch) { [product, product_2] }
+      allow(CovaApi::Product).to receive(:fetch) { [product, product2] }
     end
 
     it 'calls the api' do

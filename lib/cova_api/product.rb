@@ -20,34 +20,25 @@ module CovaApi
     end
 
     def self.fetch(ids)
-      results = CovaApi.catalog.post(
-        "/Companies(#{CovaApi.company_id})/Catalog/Items/ProductDetails/Bulk",
-        {
-          body: { 'CatalogItemIds' => ids }.to_json,
-          headers: {
-            'Accept' => 'application/json',
-            'Content-Type' => 'application/json'
-          }
-        }
-      )
-
+      results = get_results_for_fetch ids
       products = []
       results.parsed['CatalogItems'].each do |key, value|
-        products.push(new value.merge('CatalogItemId' => key))
+        products.push(new(value.merge('CatalogItemId' => key)))
       end
       products
     end
 
     def self.collection_for(id)
-      result = CovaApi.catalog.get "/Companies(#{CovaApi.company_id})/Catalog/Items(#{id})/Structure"
-      
-      data = {
-        slug: result.parsed['Slug'],
-        name: result.parsed['Name'],
-        variants: fetch(result.parsed['Variations'].map {|variation| variation['CatalogItemIds'].first})
-      }
+      parsed_result = CovaApi.catalog.get("/Companies(#{CovaApi.company_id})/Catalog/Items(#{id})/Structure").parsed
 
-      data[:sku] = data[:variants].first&.data['MasterProductId']
+      variant_ids = variant_ids_from_structure parsed_result
+      data = {
+        slug: parsed_result['Slug'],
+        name: parsed_result['Name'],
+        variants: fetch(variant_ids)
+      }
+      data[:sku] = data[:variants].first.data['MasterProductId'] if data[:variants].first&.data
+
       data
     end
 
@@ -64,6 +55,23 @@ module CovaApi
 
     def pricing_by_location(location_id)
       CovaApi::Pricing.find_by(product_id: id, location_id: location_id)
+    end
+
+    private_class_method def self.get_results_for_fetch(ids)
+      CovaApi.catalog.post(
+        "/Companies(#{CovaApi.company_id})/Catalog/Items/ProductDetails/Bulk",
+        {
+          body: { 'CatalogItemIds' => ids }.to_json,
+          headers: {
+            'Accept' => 'application/json',
+            'Content-Type' => 'application/json'
+          }
+        }
+      )
+    end
+
+    private_class_method def self.variant_ids_from_structure(structure)
+      structure['Variations'].map { |variation| variation['CatalogItemIds'].first }
     end
   end
 end
