@@ -115,6 +115,11 @@ RSpec.describe CovaApi::Product do
       allow(oauth2_response).to receive(:parsed) { bulk_products }
     end
 
+    it 'returns an empty array when no ids are sent' do
+      expect(CovaApi::Product.fetch(nil)).to be_empty
+      expect(CovaApi::Product.fetch([])).to be_empty
+    end
+
     it 'calls the api' do
       expect(CovaApi.catalog).to receive(:post).with(
         '/Companies(123)/Catalog/Items/ProductDetails/Bulk',

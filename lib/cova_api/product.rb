@@ -20,6 +20,8 @@ module CovaApi
     end
 
     def self.fetch(ids)
+      return [] if ids.nil? || ids.empty?
+
       results = get_results_for_fetch ids
       products = []
       results.parsed['CatalogItems'].each do |key, value|
